@@ -6,6 +6,10 @@ public class InOutHelper {
 
 	private static boolean DEBUG = false;
 
+	public static boolean inDebugMode(){
+		return InOutHelper.DEBUG;
+	}
+
 	public static void info(final String infoString){
 		if(InOutHelper.DEBUG){
 			System.out.println(infoString);
@@ -33,5 +37,15 @@ public class InOutHelper {
 			sc.next();
 			System.out.println("Das eingegebene Token war keine Zahl!");
 		}
+	}
+
+	public static String readString(){
+		final Scanner sc = new Scanner(System.in);
+		return sc.next();
+	}
+
+	public static String readLine(){
+		final Scanner sc = new Scanner(System.in);
+		return sc.nextLine();
 	}
 }
