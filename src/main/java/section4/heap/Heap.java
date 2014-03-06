@@ -138,7 +138,7 @@ public class Heap<T> {
 			if(this.isFull()){
 				result = "Heap is full!\n";
 			}
-			return result + Arrays.deepToString(this.array);
+			return result + Arrays.deepToString(Arrays.copyOf(this.array, this.lastpos));
 		}
 	}
 
