@@ -89,5 +89,4 @@ public class Calculator {
 		final String toBeChecked = InOutHelper.readLine();
 		System.out.println("Das Ergebnis ist: "+Calculator.calculate(toBeChecked, stack));
 	}
-
 }
