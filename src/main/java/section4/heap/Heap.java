@@ -70,6 +70,21 @@ public class Heap<T> {
 		}
 	}
 
+	public T removeBottomUp(){
+		// optimized version of remove:
+		// saves about one comparison per level
+		if(this.isEmpty()){
+			throw new RuntimeException("Tried to remove an element from an empty heap!");
+		} else {
+			final T result = this.array[0];
+			this.lastpos--;
+			final int leafIndex = this.holeDownHeap(0); // propagates a 'hole' to a leaf node (saves one comparison and swap operations compared to downheap)
+			this.array[leafIndex] = this.array[this.lastpos]; // replace leaf node the most right element in the most bottom level
+			this.upheap(leafIndex); // look for how much the element can go up in the heap (should not (!) be many levels)
+			return result;
+		}
+	}
+
 	public void add(final T element){
 		if(this.isFull()){
 			throw new RuntimeException("Tried to add an element in a full heap!");
@@ -127,6 +142,39 @@ public class Heap<T> {
 				return;
 			}
 		}
+	}
+
+	private int holeDownHeap(final int pos){
+		int current = pos;
+		while(current<this.lastpos){
+			final int leftChild = 2 * current + 1;
+			if(leftChild>=this.lastpos){
+				return current; // leaf node reached!
+			}
+			final int rightChild = leftChild + 1;
+			// determine child with minimum value
+			final int minChild;
+			if(rightChild>=this.lastpos){
+				minChild = leftChild;
+			} else {
+				if(this.comp.compare(this.array[leftChild], this.array[rightChild])<0){
+					minChild = leftChild;
+				} else {
+					minChild = rightChild;
+				}
+			}
+
+			// store minimum value in parent
+			this.array[current] = this.array[minChild];
+			// continue with the child
+			current = minChild;
+		}
+		return (current-1) / 2; // return parent (however this line should never be reached)
+	}
+
+
+	public int size() {
+		return this.lastpos;
 	}
 
 	@Override
