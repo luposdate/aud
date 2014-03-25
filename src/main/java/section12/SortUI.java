@@ -43,6 +43,9 @@ public class SortUI {
 		System.out.println("Se1: Selectionsort Variante 1");
 		System.out.println("Se2: Selectionsort Variante 2");
 		System.out.println("I: Insertionsort");
+		System.out.println("Q: Quicksort");
+		System.out.println("Co: Countingsort");
+		System.out.println("BS: Bucketsort");
 		final String command=InOutHelper.readString();
 		if(command.compareToIgnoreCase("h")==0){
 			result = HeapSort.sort(toSort);
@@ -64,6 +67,12 @@ public class SortUI {
 			result = SelectionSort.sortVariant2(toSort);
 		} else if(command.compareToIgnoreCase("i")==0){
 			result = InsertionSort.sort(toSort);
+		} else if(command.compareToIgnoreCase("q")==0){
+			result = Quicksort.sort(toSort);
+		} else if(command.compareToIgnoreCase("co")==0){
+			result = Countingsort.sort(toSort);
+		} else if(command.compareToIgnoreCase("bs")==0){
+			result = BucketSort.sort(toSort);
 		} else {
 			System.err.println("Ungültige Eingabe!");
 			return;
