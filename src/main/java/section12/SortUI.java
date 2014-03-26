@@ -46,6 +46,8 @@ public class SortUI {
 		System.out.println("Q: Quicksort");
 		System.out.println("Co: Countingsort");
 		System.out.println("BS: Bucketsort");
+		System.out.println("R10: LSD Radixsort with base 10");
+		System.out.println("R2: LSD Radixsort with base 2");
 		final String command=InOutHelper.readString();
 		if(command.compareToIgnoreCase("h")==0){
 			result = HeapSort.sort(toSort);
@@ -73,6 +75,10 @@ public class SortUI {
 			result = Countingsort.sort(toSort);
 		} else if(command.compareToIgnoreCase("bs")==0){
 			result = BucketSort.sort(toSort);
+		} else if(command.compareToIgnoreCase("r10")==0){
+			result = LSDRadixsort.sortBase10(toSort);
+		} else if(command.compareToIgnoreCase("r2")==0){
+			result = LSDRadixsort.sortBase2(toSort);
 		} else {
 			System.err.println("Ungültige Eingabe!");
 			return;
