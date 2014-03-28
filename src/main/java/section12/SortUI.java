@@ -5,6 +5,9 @@ import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 import misc.InOutHelper;
+import section12.Mergesort.MERGE;
+import section12.Mergesort.TYPE;
+import section4.heap.StandardComparator;
 
 public class SortUI {
 
@@ -48,6 +51,8 @@ public class SortUI {
 		System.out.println("BS: Bucketsort");
 		System.out.println("R10: LSD Radixsort with base 10");
 		System.out.println("R2: LSD Radixsort with base 2");
+		System.out.println("mXY: Mergesort with X = r | i | n (recursive, iterative or natural), Y = s | e | b (simple, efficient or bitonic merger)");
+		System.out.println("oem: Odd-even Mergesort");
 		final String command=InOutHelper.readString();
 		if(command.compareToIgnoreCase("h")==0){
 			result = HeapSort.sort(toSort);
@@ -79,6 +84,40 @@ public class SortUI {
 			result = LSDRadixsort.sortBase10(toSort);
 		} else if(command.compareToIgnoreCase("r2")==0){
 			result = LSDRadixsort.sortBase2(toSort);
+		} else if(command.length()==3 && (command.startsWith("m") || command.startsWith("M"))){
+			final TYPE type;
+			switch(command.charAt(1)){
+				case 'r':
+				case 'R':
+					type = TYPE.RECURSIVE;
+					break;
+				case 'i':
+				case 'I':
+					type = TYPE.ITERATIVE;
+					break;
+				case 'n':
+				case 'N':
+					type = TYPE.NATURAL;
+					break;
+				default:
+					System.err.println("Ungültige Eingabe!");
+					return;
+			}
+			final MERGE merge = MERGE.createMerge(command.charAt(2));
+			if(merge!=null){
+				result = Mergesort.sort(type, toSort, merge);
+			} else {
+				System.err.println("Ungültige Eingabe!");
+				return;
+			}
+		} else if(command.compareToIgnoreCase("oem")==0){
+			// workaround to deal with any length, also those which are not a power of two:
+			final int originalLength = toSort.length;
+			final Integer[] toSortPowerOfTwo = transformIntoArrayWithLengthPowerOf2(toSort);
+			final StandardComparator<Integer> comparator = new StandardComparator<Integer>();
+			final Integer[] result2 = Mergesort.sort(TYPE.RECURSIVE, toSortPowerOfTwo, new Mergesort.OddEvenMerger<Integer>(comparator), comparator);
+			result = new Integer[originalLength];
+			System.arraycopy(result2, 0, result, 0, originalLength);
 		} else {
 			System.err.println("Ungültige Eingabe!");
 			return;
@@ -86,4 +125,14 @@ public class SortUI {
 		System.out.println("Resultat: " + Arrays.deepToString(result));
 	}
 
+	public static Integer[] transformIntoArrayWithLengthPowerOf2(final Integer[] input){
+		final int length = 1 << (int) Math.ceil(Math.log(input.length) / Math.log(2));
+		final Integer[] result = new Integer[length];
+		System.arraycopy(input, 0, result, 0, input.length);
+		// just store some dummy elements with maximum values in the empty places
+		for(int i=input.length; i<result.length; i++){
+			result[i] = Integer.MAX_VALUE;
+		}
+		return result;
+	}
 }
