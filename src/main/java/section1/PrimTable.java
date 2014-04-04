@@ -32,7 +32,7 @@ public class PrimTable {
 			primNumberCandidates[z]=true;
 		}
 		// now calculate the prim number table
-		for(int i=2; i<Math.sqrt(n); i++){
+		for(int i=2; i<=Math.sqrt(n); i++){
 			InOutHelper.info("i:"+i);
 			if(primNumberCandidates[numberToIndex(i)]){
 				for(int k=n/i; k>=i; k--){

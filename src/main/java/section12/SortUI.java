@@ -53,6 +53,7 @@ public class SortUI {
 		System.out.println("R2: LSD Radixsort with base 2");
 		System.out.println("mXY: Mergesort with X = r | i | n (recursive, iterative or natural), Y = s | e | b (simple, efficient or bitonic merger)");
 		System.out.println("oem: Odd-even Mergesort");
+		System.out.println("bi: BitonicSort");
 		final String command=InOutHelper.readString();
 		if(command.compareToIgnoreCase("h")==0){
 			result = HeapSort.sort(toSort);
@@ -116,6 +117,13 @@ public class SortUI {
 			final Integer[] toSortPowerOfTwo = transformIntoArrayWithLengthPowerOf2(toSort);
 			final StandardComparator<Integer> comparator = new StandardComparator<Integer>();
 			final Integer[] result2 = Mergesort.sort(TYPE.RECURSIVE, toSortPowerOfTwo, new Mergesort.OddEvenMerger<Integer>(comparator), comparator);
+			result = new Integer[originalLength];
+			System.arraycopy(result2, 0, result, 0, originalLength);
+		} else if(command.compareToIgnoreCase("bi")==0){
+			// workaround to deal with any length, also those which are not a power of two:
+			final int originalLength = toSort.length;
+			final Integer[] toSortPowerOfTwo = transformIntoArrayWithLengthPowerOf2(toSort);
+			final Integer[] result2 = BitonicSort.sort(toSortPowerOfTwo);
 			result = new Integer[originalLength];
 			System.arraycopy(result2, 0, result, 0, originalLength);
 		} else {
