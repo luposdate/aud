@@ -73,7 +73,7 @@ public class TowerOfHanoi {
 
 
 	public static void main(final String[] args) {
-		System.out.println("Program to compute the factorial of a given number...");
+		System.out.println("Program to simulate the Tower of Hanoi...");
 		InOutHelper.askForDebugMode();
 		final int hoehe = InOutHelper.readInt();
 		System.out.println("Rekursiv:");
