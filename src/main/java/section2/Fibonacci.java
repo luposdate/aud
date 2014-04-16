@@ -54,7 +54,7 @@ public class Fibonacci {
 	 * @param args
 	 */
 	public static void main(final String[] args) {
-		System.out.println("Program to compute the factorial of a given number...");
+		System.out.println("Program to compute the fibonacci number of a given number...");
 		InOutHelper.askForDebugMode();
 		final int n = InOutHelper.readInt();
 		System.out.println("Resultat rekursiv:"+rec_fib(n));
