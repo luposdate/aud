@@ -40,7 +40,7 @@ public class ListQueue<T> implements ADTQueue<T> {
 	@Override
 	public String toString(){
 		if(this.start==null){
-			return "empty stack";
+			return "empty queue";
 		}
 		String result = "";
 		SinglyLinkedListItem<T> item = this.start;
