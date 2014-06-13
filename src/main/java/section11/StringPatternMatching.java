@@ -31,9 +31,9 @@ public class StringPatternMatching {
 	// -------------------------------------- Knuth-Morris-Pratt-approach ------------------------------------------------------------
 
 	private static int[] computeF(final String pattern){
-		final int fail[] = new int[pattern.length()];
+		final int fail[] = new int[pattern.length()-1];
 		fail[0] = 0;
-		final int m = pattern.length();
+		final int m = fail.length;
 		int j = 0;
 		int i = 1;
 		while (i < m) {
